@@ -1,0 +1,67 @@
+# ---- macOS ----
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+
+# ---- Xcode ----
+build/
+DerivedData/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+timeline.xctimeline
+playground.xcworkspace
+
+# Keep shared schemes, ignore per-user ones
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/xcshareddata/
+
+# ---- Swift Package Manager ----
+.build/
+.swiftpm/
+Packages/
+Package.resolved
+
+# ---- Dependency managers (in case they get used later) ----
+Pods/
+Carthage/Build/
+
+# ---- Fastlane ----
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# ---- Secrets: never commit these ----
+.env
+.env.*
+!.env.example
+*.xcconfig.local
+Secrets.swift
+Secrets.plist
+GoogleService-Info.plist
+
+# ---- Supabase ----
+supabase/.branches
+supabase/.temp
+supabase/.env
+
+# ---- Data work (raw dumps are huge; keep them out of git) ----
+data/raw/
+data/tmp/
+*.csv.gz
+*.jsonl.gz
