@@ -34,7 +34,9 @@ playground.xcworkspace
 .build/
 .swiftpm/
 Packages/
-Package.resolved
+# Package.resolved is deliberately NOT ignored. That is a library convention;
+# this is an app, so pinning exact dependency versions is what keeps builds
+# reproducible locally and on CI.
 
 # ---- Dependency managers (in case they get used later) ----
 Pods/
@@ -51,6 +53,8 @@ fastlane/test_output
 .env.*
 !.env.example
 *.xcconfig.local
+Config/Secrets.xcconfig
+!Config/Secrets.example.xcconfig
 Secrets.swift
 Secrets.plist
 GoogleService-Info.plist

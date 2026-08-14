@@ -1,0 +1,55 @@
+// CalorAR — shared build settings.
+//
+// These live here rather than inside project.pbxproj on purpose: Xcode writes
+// the pbxproj as a generated blob that is painful to review, while an xcconfig
+// is plain text that diffs cleanly.
+
+// ---- Identity ----
+PRODUCT_NAME = $(TARGET_NAME)
+PRODUCT_BUNDLE_IDENTIFIER = com.salolevi.calorar
+MARKETING_VERSION = 0.1.0
+CURRENT_PROJECT_VERSION = 1
+
+// ---- Platform ----
+// SwiftData requires iOS 17.
+IPHONEOS_DEPLOYMENT_TARGET = 17.0
+TARGETED_DEVICE_FAMILY = 1
+SUPPORTED_PLATFORMS = iphoneos iphonesimulator
+
+// ---- Swift ----
+// Swift 5 language mode. Swift 6's strict concurrency is worth adopting later,
+// deliberately, rather than fighting it before there is any app to speak of.
+SWIFT_VERSION = 5.0
+SWIFT_EMIT_LOC_STRINGS = YES
+ENABLE_PREVIEWS = YES
+
+// ---- Info.plist ----
+// A real Info.plist rather than GENERATE_INFOPLIST_FILE, because this app needs
+// two custom keys (SupabaseURL, SupabasePublishableKey) and INFOPLIST_KEY_*
+// only supports keys Xcode already recognises — it silently drops custom ones,
+// which fails at runtime rather than at build time. Values in $(...) inside the
+// plist are substituted from the settings here.
+GENERATE_INFOPLIST_FILE = NO
+INFOPLIST_FILE = Config/Info.plist
+
+// ---- Signing ----
+// Left as automatic with no team, so the project builds for the simulator
+// without an Apple Developer account. Set DEVELOPMENT_TEAM in Secrets.xcconfig
+// when building for a device.
+CODE_SIGN_STYLE = Automatic
+
+// ---- Supabase ----
+// An xcconfig treats // as a start-of-comment, so writing the URL literally
+// would silently truncate it at the scheme. Composing it from a slash variable
+// is the standard workaround — this is deliberate, not a typo.
+SLASH = /
+SUPABASE_URL = https:$(SLASH)$(SLASH)uepndioqmaskwoelbeov.supabase.co
+
+// The publishable key is safe to ship inside a client app — RLS is what
+// actually guards the data. It is still kept out of git because this repo is
+// public and a leaked key invites quota abuse.
+// Copy Config/Secrets.example.xcconfig to Config/Secrets.xcconfig and fill in.
+#include? "Secrets.xcconfig"
+
+// SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY are read by Config/Info.plist via
+// $(...) substitution, which is what puts them in the app bundle at runtime.
