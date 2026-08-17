@@ -15,12 +15,12 @@ insert into public.profiles (id, display_name) values
   ('11111111-1111-1111-1111-111111111111', 'Ana'),
   ('22222222-2222-2222-2222-222222222222', 'Beto');
 
-insert into public.diary_entries (user_id, logged_on, meal_slot, product_id, quantity)
-select '11111111-1111-1111-1111-111111111111', current_date, 'desayuno', id, 200
+insert into public.diary_entries (user_id, logged_at, product_id, quantity)
+select '11111111-1111-1111-1111-111111111111', now() - interval '4 hours', id, 200
 from public.products where name like 'Leche%';
 
-insert into public.diary_entries (user_id, logged_on, meal_slot, product_id, quantity)
-select '22222222-2222-2222-2222-222222222222', current_date, 'cena', id, 355
+insert into public.diary_entries (user_id, logged_at, product_id, quantity)
+select '22222222-2222-2222-2222-222222222222', now() - interval '1 hour', id, 355
 from public.products where name like 'Cerveza%';
 
 \echo ''
@@ -31,8 +31,8 @@ set role authenticated;
 set request.jwt.claim.sub = '11111111-1111-1111-1111-111111111111';
 
 \echo ''
-\echo '=== as Ana: own diary entries only — expect 1 (desayuno) ==='
-select meal_slot, quantity from public.diary_entries;
+\echo '=== as Ana: own diary entries only — expect 1 row ==='
+select to_char(logged_at, 'HH24:MI') as hora, quantity from public.diary_entries;
 
 \echo ''
 \echo '=== as Ana: own profile only — expect 1 (Ana) ==='
@@ -48,6 +48,6 @@ select name from public.search_products('serenisima');
 
 \echo ''
 \echo '=== as Ana: writing a row owned by Beto MUST fail ==='
-insert into public.diary_entries (user_id, logged_on, meal_slot, product_id, quantity)
-select '22222222-2222-2222-2222-222222222222', current_date, 'almuerzo', id, 100
+insert into public.diary_entries (user_id, logged_at, product_id, quantity)
+select '22222222-2222-2222-2222-222222222222', now(), id, 100
 from public.products limit 1;

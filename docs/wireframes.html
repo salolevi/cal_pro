@@ -1,0 +1,805 @@
+<title>CalorAR Wireframes</title>
+<style>
+  :root {
+    --paper: #F2F4F6;
+    --paper-raised: #FFFFFF;
+    --ink: #14181C;
+    --ink-soft: #4B535C;
+    --ink-faint: #7C848C;
+    --line: #D8DEE3;
+    --accent: #2C6FB0;
+    --accent-soft: #E4EDF6;
+    --warm: #C85A24;
+    --good: #2E7D5B;
+
+    /* Wireframe greys, deliberately separate from the page accent so the
+       drawings stay monochrome and read as unfinished. */
+    --wf-bg: #FFFFFF;
+    --wf-panel: #F0F2F4;
+    --wf-line: #C3CAD1;
+    --wf-line-strong: #949DA6;
+    --wf-text: #2B3238;
+    --wf-text-soft: #6B747C;
+
+    --radius: 10px;
+    --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, ui-serif, serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "SF Mono", ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #12161B;
+      --paper-raised: #1A1F26;
+      --ink: #ECEFF2;
+      --ink-soft: #A7B0B9;
+      --ink-faint: #6E7680;
+      --line: #2A313A;
+      --accent: #6FA3D8;
+      --accent-soft: #1E2B3A;
+      --warm: #E58A55;
+      --good: #5FBF93;
+      --wf-bg: #171C22;
+      --wf-panel: #1F252C;
+      --wf-line: #39424C;
+      --wf-line-strong: #5B6670;
+      --wf-text: #DDE2E7;
+      --wf-text-soft: #8B949D;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #12161B;
+    --paper-raised: #1A1F26;
+    --ink: #ECEFF2;
+    --ink-soft: #A7B0B9;
+    --ink-faint: #6E7680;
+    --line: #2A313A;
+    --accent: #6FA3D8;
+    --accent-soft: #1E2B3A;
+    --warm: #E58A55;
+    --good: #5FBF93;
+    --wf-bg: #171C22;
+    --wf-panel: #1F252C;
+    --wf-line: #39424C;
+    --wf-line-strong: #5B6670;
+    --wf-text: #DDE2E7;
+    --wf-text-soft: #8B949D;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.55;
+  }
+
+  .page { max-width: 1000px; margin: 0 auto; padding: 3.5rem 1.5rem 5rem; }
+
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; text-wrap: balance; }
+  p { margin: 0 0 1rem; }
+  p:last-child { margin-bottom: 0; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+  /* ---------- Hero ---------- */
+  .hero { display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 2rem; }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent); margin: 0;
+  }
+  .hero h1 { font-size: clamp(2.1rem, 4.5vw, 2.9rem); margin: 0; letter-spacing: -0.01em; }
+  .hero-rule { width: 60px; height: 3px; background: linear-gradient(90deg, var(--accent), transparent); border-radius: 2px; }
+  .thesis { font-size: 1.05rem; color: var(--ink-soft); max-width: 64ch; margin: 0; }
+
+  .callout {
+    border-left: 2px solid var(--warm);
+    padding-left: 0.95rem;
+    font-size: 0.93rem;
+    color: var(--ink-soft);
+    max-width: 66ch;
+    margin-top: 0.5rem;
+  }
+  .callout b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- TOC ---------- */
+  .toc {
+    display: flex; flex-wrap: wrap; gap: 0.3rem;
+    padding: 0.85rem 0; margin-bottom: 2.5rem;
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .toc a {
+    font-family: var(--font-mono); font-size: 0.75rem; text-decoration: none;
+    color: var(--ink-soft); padding: 0.3rem 0.6rem; border-radius: 6px; border: 1px solid transparent;
+  }
+  .toc a:hover { color: var(--accent); border-color: var(--line); background: var(--paper-raised); }
+
+  /* ---------- Screen sections ---------- */
+  .screen { margin-bottom: 3.5rem; scroll-margin-top: 1.5rem; }
+  .screen-head { margin-bottom: 1.1rem; }
+  .screen-num {
+    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-faint);
+  }
+  .screen h2 { font-size: 1.5rem; margin: 0.15rem 0 0.4rem; }
+  .screen-sub { font-size: 0.95rem; color: var(--ink-soft); max-width: 66ch; margin: 0; }
+
+  .layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 1.75rem; align-items: start; }
+  .layout.wide { grid-template-columns: 1fr; }
+
+  .frame-well {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px;
+  }
+
+  /* ---------- Phone wireframe primitives ---------- */
+  .phone {
+    background: var(--wf-bg);
+    border: 1px solid var(--wf-line-strong);
+    border-radius: 16px;
+    overflow: hidden;
+    font-size: 10px;
+    color: var(--wf-text);
+  }
+  .phone.sm { font-size: 9px; border-radius: 12px; }
+
+  .st-bar {
+    display: flex; justify-content: space-between;
+    padding: 5px 10px; font-size: 9px; color: var(--wf-text-soft);
+    border-bottom: 1px solid var(--wf-line);
+  }
+  .nav {
+    padding: 9px 10px; border-bottom: 1px solid var(--wf-line);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-title { font-size: 13px; font-weight: 600; }
+  .sec { padding: 9px 10px; }
+  .sec + .sec { border-top: 1px solid var(--wf-line); }
+  .panel { background: var(--wf-panel); }
+
+  .ph {                                   /* dashed placeholder */
+    border: 1px dashed var(--wf-line-strong);
+    border-radius: 5px;
+    padding: 5px 6px;
+    color: var(--wf-text-soft);
+    text-align: center;
+  }
+  .field {
+    border: 1px solid var(--wf-line);
+    border-radius: 5px;
+    padding: 5px 7px;
+    color: var(--wf-text-soft);
+    background: var(--wf-bg);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .btn {
+    border: 1px solid var(--wf-line-strong);
+    background: var(--wf-panel);
+    border-radius: 6px; padding: 6px; text-align: center; font-weight: 600;
+  }
+  .row { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+  .rows { display: grid; gap: 5px; }
+  .divider-row { border-bottom: 1px solid var(--wf-line); padding-bottom: 4px; }
+  .muted { color: var(--wf-text-soft); }
+  .lbl {
+    font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--wf-text-soft);
+  }
+  .bar { height: 5px; border: 1px solid var(--wf-line); border-radius: 3px; background: var(--wf-bg); }
+  .bar.fill { background: var(--wf-line); }
+  .ring {
+    width: 54px; height: 54px; border-radius: 50%;
+    border: 2px dashed var(--wf-line-strong);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; line-height: 1.15; font-size: 8px; color: var(--wf-text-soft);
+    flex-shrink: 0;
+  }
+  .tabs { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--wf-line-strong); background: var(--wf-panel); }
+  .tab { padding: 7px 2px; text-align: center; font-size: 8px; color: var(--wf-text-soft); }
+  .tab.on { color: var(--wf-text); font-weight: 600; }
+  .badge {
+    display: inline-block; border: 1px solid var(--wf-line); border-radius: 999px;
+    padding: 1px 5px; font-size: 8px; color: var(--wf-text-soft);
+  }
+  .steps { display: flex; gap: 3px; }
+  .dot { flex: 1; height: 3px; border-radius: 2px; background: var(--wf-line); }
+  .dot.on { background: var(--wf-line-strong); }
+
+  /* ---------- Onboarding strip ---------- */
+  .strip-scroll { overflow-x: auto; padding-bottom: 0.6rem; }
+  .strip { display: grid; grid-auto-flow: column; grid-auto-columns: 158px; gap: 12px; }
+
+  /* ---------- Notes ---------- */
+  .notes { display: grid; gap: 0.85rem; }
+  .note { border-left: 2px solid var(--line); padding-left: 0.85rem; }
+  .note b { display: block; font-size: 0.93rem; color: var(--ink); font-weight: 600; margin-bottom: 0.1rem; }
+  .note span { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.55; }
+
+  .implies {
+    margin-top: 1.1rem;
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0.85rem 1rem;
+  }
+  .implies .lbl-h {
+    font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.35rem;
+  }
+  .implies ul { margin: 0; padding-left: 1.1rem; }
+  .implies li { font-size: 0.89rem; color: var(--ink-soft); margin-bottom: 0.25rem; }
+  .implies li:last-child { margin-bottom: 0; }
+  .implies code {
+    font-family: var(--font-mono); font-size: 0.85em;
+    background: var(--accent-soft); color: var(--accent);
+    padding: 0.05em 0.3em; border-radius: 3px;
+  }
+
+  .open-q {
+    margin-top: 0.85rem;
+    border-left: 2px solid var(--warm);
+    padding-left: 0.85rem;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+  .open-q b { color: var(--ink); font-weight: 600; }
+
+  footer {
+    margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line);
+    font-size: 0.85rem; color: var(--ink-faint);
+  }
+
+  @media (max-width: 720px) {
+    .layout { grid-template-columns: 1fr; }
+    .frame-well { max-width: 280px; }
+    .page { padding: 2.25rem 1rem 3.5rem; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="hero">
+    <p class="eyebrow">Phase 0 · Screen Structure</p>
+    <h1>CalorAR Wireframes</h1>
+    <div class="hero-rule"></div>
+    <p class="thesis">Five core screens, drawn as structure rather than surface. Every decision here is cheap to change now and expensive to change once SwiftUI assumes it.</p>
+    <p class="callout"><b>These are wireframes, not mockups.</b> No color, no typography, no icons — dashed boxes mean "something goes here." If you catch yourself reacting to how they look rather than what's on them, they're failing at their job.</p>
+  </header>
+
+  <nav class="toc" aria-label="Screens">
+    <a href="#onboarding">1 · Onboarding</a>
+    <a href="#buscar">2 · Buscar</a>
+    <a href="#detalle">3 · Detalle</a>
+    <a href="#diario">4 · Diario</a>
+    <a href="#perfil">5 · Perfil</a>
+    <a href="#decisions">Open decisions</a>
+  </nav>
+
+  <main>
+
+    <!-- ══════════ 1. ONBOARDING ══════════ -->
+    <section class="screen" id="onboarding">
+      <div class="screen-head">
+        <span class="screen-num">Screen 1</span>
+        <h2>Onboarding</h2>
+        <p class="screen-sub">Five steps, one question each. This is where the Mifflin–St Jeor math stops being a formula and becomes an interface.</p>
+      </div>
+
+      <div class="strip-scroll">
+        <div class="strip">
+
+          <!-- 1.1 Bienvenida -->
+          <div class="frame-well">
+            <div class="phone sm">
+              <div class="st-bar"><span>9:41</span><span>▂▄ ▮</span></div>
+              <div class="sec" style="text-align:center; padding-top:20px;">
+                <div class="ph" style="width:38px; height:38px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center;">logo</div>
+                <div style="font-weight:600; font-size:12px;">CalorAR</div>
+                <div class="muted" style="margin-top:3px;">Las marcas argentinas que realmente comés</div>
+              </div>
+              <div class="sec rows" style="padding-top:14px;">
+                <div class="btn">Continuar con Apple</div>
+                <div class="field" style="justify-content:center;">Email</div>
+                <div class="muted" style="text-align:center; margin-top:3px;">Ya tengo cuenta</div>
+              </div>
+            </div>
+            <div class="lbl" style="margin-top:7px; text-align:center;">1.1 Bienvenida</div>
+          </div>
+
+          <!-- 1.2 Datos -->
+          <div class="frame-well">
+            <div class="phone sm">
+              <div class="st-bar"><span>9:41</span><span>▂▄ ▮</span></div>
+              <div class="sec">
+                <div class="steps"><i class="dot on"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i></div>
+                <div style="font-weight:600; margin-top:7px;">Tus datos</div>
+                <div class="muted" style="margin-bottom:7px;">Para calcular tu gasto diario</div>
+              </div>
+              <div class="sec rows">
+                <div class="field"><span>Sexo</span><span class="muted">▾</span></div>
+                <div class="field"><span>Fecha de nac.</span><span class="muted">▾</span></div>
+                <div class="field"><span>Altura</span><span class="muted">cm</span></div>
+                <div class="field"><span>Peso actual</span><span class="muted">kg</span></div>
+                <div class="muted" style="font-size:8px; line-height:1.35;">Usamos sexo y edad sólo para la fórmula de gasto calórico.</div>
+              </div>
+              <div class="sec"><div class="btn">Siguiente</div></div>
+            </div>
+            <div class="lbl" style="margin-top:7px; text-align:center;">1.2 Datos</div>
+          </div>
+
+          <!-- 1.3 Actividad -->
+          <div class="frame-well">
+            <div class="phone sm">
+              <div class="st-bar"><span>9:41</span><span>▂▄ ▮</span></div>
+              <div class="sec">
+                <div class="steps"><i class="dot on"></i><i class="dot on"></i><i class="dot"></i><i class="dot"></i></div>
+                <div style="font-weight:600; margin-top:7px;">Nivel de actividad</div>
+              </div>
+              <div class="sec rows">
+                <div class="field"><span>Sedentario</span><span class="muted">○</span></div>
+                <div class="field"><span>Ligero</span><span class="muted">○</span></div>
+                <div class="field" style="border-color:var(--wf-line-strong);"><span>Moderado</span><span>●</span></div>
+                <div class="field"><span>Activo</span><span class="muted">○</span></div>
+                <div class="field"><span>Muy activo</span><span class="muted">○</span></div>
+                <div class="muted" style="font-size:8px;">Ejercicio 3–5 días por semana</div>
+              </div>
+              <div class="sec"><div class="btn">Siguiente</div></div>
+            </div>
+            <div class="lbl" style="margin-top:7px; text-align:center;">1.3 Actividad</div>
+          </div>
+
+          <!-- 1.4 Objetivo -->
+          <div class="frame-well">
+            <div class="phone sm">
+              <div class="st-bar"><span>9:41</span><span>▂▄ ▮</span></div>
+              <div class="sec">
+                <div class="steps"><i class="dot on"></i><i class="dot on"></i><i class="dot on"></i><i class="dot"></i></div>
+                <div style="font-weight:600; margin-top:7px;">Tu objetivo</div>
+              </div>
+              <div class="sec rows">
+                <div class="field"><span>Perder peso</span><span class="muted">○</span></div>
+                <div class="field" style="border-color:var(--wf-line-strong);"><span>Mantener</span><span>●</span></div>
+                <div class="field"><span>Ganar peso</span><span class="muted">○</span></div>
+                <div class="lbl" style="margin-top:5px;">Ritmo</div>
+                <div class="ph">— slider · 0,25–1 kg/sem —</div>
+              </div>
+              <div class="sec"><div class="btn">Siguiente</div></div>
+            </div>
+            <div class="lbl" style="margin-top:7px; text-align:center;">1.4 Objetivo</div>
+          </div>
+
+          <!-- 1.5 Resultado -->
+          <div class="frame-well">
+            <div class="phone sm">
+              <div class="st-bar"><span>9:41</span><span>▂▄ ▮</span></div>
+              <div class="sec">
+                <div class="steps"><i class="dot on"></i><i class="dot on"></i><i class="dot on"></i><i class="dot on"></i></div>
+                <div style="font-weight:600; margin-top:7px;">Tu meta diaria</div>
+              </div>
+              <div class="sec panel" style="text-align:center;">
+                <div style="font-size:20px; font-weight:600;">2.100</div>
+                <div class="muted">kcal por día</div>
+              </div>
+              <div class="sec rows">
+                <div class="row"><span class="muted">Proteínas</span><span>158 g</span></div>
+                <div class="row"><span class="muted">Carbohidratos</span><span>210 g</span></div>
+                <div class="row"><span class="muted">Grasas</span><span>70 g</span></div>
+                <div class="ph" style="margin-top:5px;">Ajustar manualmente</div>
+              </div>
+              <div class="sec"><div class="btn">Empezar</div></div>
+            </div>
+            <div class="lbl" style="margin-top:7px; text-align:center;">1.5 Meta</div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="notes" style="margin-top:1.4rem;">
+        <div class="note"><b>Sign in with Apple sits above email</b><span>Apple requires offering it once any other third-party login exists. Putting it first also removes the highest-friction step from the highest-abandonment screen.</span></div>
+        <div class="note"><b>The calculated target is a default, not a cage</b><span>Step 1.5 shows the computed number and an explicit "Ajustar manualmente" beside it. The plan called for this; the wireframe is where it becomes visible rather than aspirational.</span></div>
+        <div class="note"><b>Sex is asked with a stated reason</b><span>It's an input to Mifflin–St Jeor, not a profile decoration. The one-line explanation costs nothing and prevents the field reading as gratuitous.</span></div>
+        <div class="note"><b>One question per step</b><span>A single form with nine fields reads as work. Four short steps with a progress indicator read as progress — and let you drop someone back in mid-flow.</span></div>
+      </div>
+
+      <div class="implies">
+        <span class="lbl-h">Implications for what's already built</span>
+        <ul>
+          <li>Steps 1.2–1.4 map exactly onto <code>profiles</code>: <code>sex</code>, <code>birth_date</code>, <code>height_cm</code>, <code>activity_level</code>, <code>goal</code>.</li>
+          <li>Step 1.5 writes <code>calorie_target</code> and the three macro target columns — all four already nullable and overridable.</li>
+          <li>Current weight is a <code>weight_logs</code> row, not a profile column. Onboarding therefore writes to two tables, and the first weigh-in seeds the trend chart on screen 5.</li>
+          <li>The <code>activity_level</code> enum values (<code>sedentario</code> … <code>muy_activo</code>) are the five options verbatim — no mapping layer needed.</li>
+          <li>The ritmo slider writes <code>weekly_rate_kg</code>, added in migration <code>20260816000000</code>. Combined with <code>goal</code> it produces the daily delta applied on top of TDEE.</li>
+        </ul>
+      </div>
+
+      <p class="open-q"><b>Resolved:</b> ritmo now has a home — <code>weekly_rate_kg numeric(3,2)</code> on <code>profiles</code>, capped at 2 kg/week. The slider stays rather than being replaced by fixed per-goal deltas, which keeps the pace of loss an explicit user choice instead of a hidden constant.</p>
+    </section>
+
+    <!-- ══════════ 2. BUSCAR ══════════ -->
+    <section class="screen" id="buscar">
+      <div class="screen-head">
+        <span class="screen-num">Screen 2</span>
+        <h2>Buscar</h2>
+        <p class="screen-sub">The differentiator. Everything the product claims lives or dies on this screen returning the right Argentine product in two keystrokes.</p>
+      </div>
+
+      <div class="layout">
+        <div class="frame-well">
+          <div class="phone">
+            <div class="st-bar"><span>9:41</span><span>▂▄ ▮</span></div>
+            <div class="nav">
+              <span class="nav-title">Buscar</span>
+              <span class="muted">⌫ scan</span>
+            </div>
+            <div class="sec">
+              <div class="field" style="border-color:var(--wf-line-strong);"><span>serenisima|</span><span class="muted">✕</span></div>
+            </div>
+
+            <div class="sec">
+              <div class="lbl" style="margin-bottom:5px;">Resultados</div>
+              <div class="rows">
+                <div class="divider-row">
+                  <div class="row"><span>Leche Entera</span><span class="muted">122 kcal</span></div>
+                  <div class="row"><span class="muted" style="font-size:9px;">La Serenísima · 1 vaso</span><span class="badge">verificado</span></div>
+                </div>
+                <div class="divider-row">
+                  <div class="row"><span>Yogur Entero Frutilla</span><span class="muted">150 kcal</span></div>
+                  <div class="row"><span class="muted" style="font-size:9px;">La Serenísima · 1 pote</span><span class="badge">verificado</span></div>
+                </div>
+                <div class="divider-row">
+                  <div class="row"><span>Queso Untable</span><span class="muted">72 kcal</span></div>
+                  <div class="row"><span class="muted" style="font-size:9px;">La Serenísima · 30 g</span><span class="badge">sin verificar</span></div>
+                </div>
+              </div>
+              <div class="ph" style="margin-top:8px;">¿No lo encontrás? Agregalo</div>
+            </div>
+
+            <div class="tabs">
+              <div class="tab">Diario</div><div class="tab on">Buscar</div>
+              <div class="tab">Progreso</div><div class="tab">Perfil</div>
+            </div>
+          </div>
+          <div class="lbl" style="margin-top:7px; text-align:center;">2.1 Con resultados</div>
+        </div>
+
+        <div>
+          <div class="notes">
+            <div class="note"><b>kcal per serving, not per 100 g</b><span>The database stores per 100 g because that's the sane canonical form. Nobody thinks in 100 g. The row shows "1 vaso · 122 kcal" and does the conversion for you — this is the single highest-value translation in the app.</span></div>
+            <div class="note"><b>Brand on the second line, product first</b><span>People search "leche" far more than "serenísima". The weighted tsvector already ranks name above brand; the layout should agree with the ranking.</span></div>
+            <div class="note"><b>Verified badge on every row</b><span>Bulk-imported Open Food Facts rows sit next to hand-curated ones. Showing which is which is both the trust signal and the liability mitigation the plan called for — and it tells you where curation effort is still needed.</span></div>
+            <div class="note"><b>The empty state is the real screen</b><span>Most logging is repetition. Before a query is typed, this screen should show recientes and favoritos — not a blank page with a cursor. That state gets used more than the results state.</span></div>
+            <div class="note"><b>"¿No lo encontrás?" is visible but quiet</b><span>It captures the gap when the catalog misses. Wired up in the crowdsourcing phase; until then it's the clearest signal of what's missing.</span></div>
+          </div>
+
+          <div class="implies">
+            <span class="lbl-h">Implications for what's already built</span>
+            <ul>
+              <li>Rows come straight from <code>search_products(q)</code> — it already returns name, brand, kcal, serving size and label in one call.</li>
+              <li><code>is_verified</code> drives the badge, and is already a tiebreaker in the function's <code>ORDER BY</code>.</li>
+              <li>Per-serving kcal is <code>calories_kcal × serving_size / 100</code>. Products with a null <code>serving_size</code> have no serving row to show — the layout needs a per-100 g fallback.</li>
+              <li>The empty state needs a query the schema does not yet serve: recent and favourite products. Recents are derivable from <code>diary_entries</code>; favourites are not modelled at all.</li>
+            </ul>
+          </div>
+
+          <p class="open-q"><b>Gap found by drawing this:</b> "Favoritos" is in the MVP scope table but has no table. It needs either a <code>favourites</code> join table or a boolean derived from logging frequency. Worth deciding before Phase 2 rather than bolting on later.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 3. DETALLE ══════════ -->
+    <section class="screen" id="detalle">
+      <div class="screen-head">
+        <span class="screen-num">Screen 3</span>
+        <h2>Detalle de producto</h2>
+        <p class="screen-sub">The commit step. Everything above it is browsing; this is where a row lands in the diary.</p>
+      </div>
+
+      <div class="layout">
+        <div class="frame-well">
+          <div class="phone">
+            <div class="st-bar"><span>9:41</span><span>▂▄ ▮</span></div>
+            <div class="nav"><span class="muted">‹ Buscar</span><span class="muted">☆</span></div>
+
+            <div class="sec">
+              <div style="font-weight:600; font-size:12px;">Leche Entera</div>
+              <div class="muted">La Serenísima <span class="badge">verificado</span></div>
+            </div>
+
+            <div class="sec">
+              <div class="lbl" style="margin-bottom:5px;">Porciones</div>
+              <div class="row" style="gap:6px;">
+                <div class="field" style="flex:1; border-color:var(--wf-line-strong);"><span>1 vaso (200 ml)</span></div>
+                <div class="field" style="width:46px; justify-content:center; border-color:var(--wf-line-strong);">1</div>
+              </div>
+
+              <div class="lbl" style="margin:9px 0 5px;">O cantidad exacta</div>
+              <div class="row" style="gap:6px;">
+                <div class="field" style="flex:1;"><span class="muted">200</span></div>
+                <div class="field" style="width:58px;"><span>ml</span><span class="muted">▾</span></div>
+              </div>
+            </div>
+
+            <div class="sec panel">
+              <div class="row"><span style="font-weight:600; font-size:14px;">122</span><span class="muted">kcal</span></div>
+              <div class="rows" style="margin-top:6px;">
+                <div class="row"><span class="muted">Proteínas</span><span>6,0 g</span></div>
+                <div class="row"><span class="muted">Carbohidratos</span><span>9,6 g</span></div>
+                <div class="row"><span class="muted">Grasas</span><span>6,0 g</span></div>
+              </div>
+            </div>
+
+            <div class="sec">
+              <div class="btn">Añadir ahora</div>
+              <div class="ph" style="margin-top:6px;">Agregar… · elegir fecha y hora</div>
+              <div class="muted" style="font-size:8px; margin-top:7px; text-align:center;">Fuente: curado · verificado 12/08/2026</div>
+            </div>
+          </div>
+          <div class="lbl" style="margin-top:7px; text-align:center;">3.1 Detalle</div>
+        </div>
+
+        <div>
+          <div class="notes">
+            <div class="note"><b>Two ways in, one of them default</b><span>The serving row is prefilled from the product, so the common case is "1 × 1 vaso" and a single tap. The exact-amount row underneath handles everything else without making the common case pay for it.</span></div>
+            <div class="note"><b>Unit selector, not a fixed unit</b><span>g, mg, ml, l. Anything the label uses. Conversion to the product's <code>basis_unit</code> happens before the write, so the stored value stays canonical.</span></div>
+            <div class="note"><b>"Añadir ahora" is the primary action</b><span>Most logging happens while eating. One tap stamps the current instant — no picker, no meal taxonomy, no decision.</span></div>
+            <div class="note"><b>"Agregar…" covers the rest</b><span>Opens a date and time picker for anything logged late or backfilled. Secondary weight, because it's the less common path — but it must allow past times, which is the whole reason it exists.</span></div>
+            <div class="note"><b>Macros recalculate live</b><span>Derived, never stored. Two glasses shows 244 kcal without a round trip — the arithmetic runs client-side off the per-100 values.</span></div>
+            <div class="note"><b>Provenance in the footer, quietly</b><span>Source and verification date, small and at the bottom. Present for trust when someone looks; never competing with the numbers.</span></div>
+          </div>
+
+          <div class="implies">
+            <span class="lbl-h">Implications for what's already built</span>
+            <ul>
+              <li>Both buttons write one <code>diary_entries</code> row: <code>product_id</code>, <code>quantity</code> in <code>basis_unit</code>, and <code>logged_at</code>. "Añadir ahora" passes <code>now()</code>; "Agregar…" passes the chosen instant.</li>
+              <li>The serving row comes from <code>serving_size</code> + <code>serving_label</code>. Products with a null <code>serving_size</code> show only the exact-amount row.</li>
+              <li>Unit conversion is client-side: mg→g, l→ml. <code>quantity</code> is always stored in the product's <code>basis_unit</code>, so no unit column is needed on the row.</li>
+              <li>Displayed macros come from <code>nutrition_facts</code> per-100 values × quantity ÷ 100. Nothing derived is persisted, so a corrected nutrition panel retroactively fixes every past entry.</li>
+              <li>The footer reads <code>source</code> and <code>verified_at</code>, both already on <code>products</code>.</li>
+            </ul>
+          </div>
+
+          <p class="open-q"><b>Consequence worth knowing:</b> storing only <code>quantity</code> in <code>basis_unit</code> means the diary shows "200 ml", not "1 vaso". Rendering "1 vaso" requires dividing by the product's current <code>serving_size</code> — so if that value is later corrected, historical entries redisplay differently even though the amount eaten never changed. Storing what the user actually typed would avoid it, at the cost of two more columns.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 4. DIARIO ══════════ -->
+    <section class="screen" id="diario">
+      <div class="screen-head">
+        <span class="screen-num">Screen 4</span>
+        <h2>Diario</h2>
+        <p class="screen-sub">The home screen and the most-opened surface in the app. Answers one question before anything else: how much do I have left today?</p>
+      </div>
+
+      <div class="layout">
+        <div class="frame-well">
+          <div class="phone">
+            <div class="st-bar"><span>9:41</span><span>▂▄ ▮</span></div>
+            <div class="nav"><span class="nav-title">Diario</span></div>
+
+            <div class="sec">
+              <div class="field"><span class="muted">‹</span><span>Hoy · 14 ago</span><span class="muted">›</span></div>
+            </div>
+
+            <div class="sec panel">
+              <div class="row" style="gap:11px; justify-content:flex-start;">
+                <div class="ring">anillo<br>kcal</div>
+                <div style="flex:1;">
+                  <div><span style="font-size:15px; font-weight:600;">1.240</span> <span class="muted">/ 2.100</span></div>
+                  <div class="muted" style="margin-bottom:5px;">Te quedan 860 kcal</div>
+                  <div class="rows" style="gap:3px;">
+                    <div class="bar fill" style="width:70%;"></div>
+                    <div class="bar" style="width:45%;"></div>
+                    <div class="bar" style="width:55%;"></div>
+                  </div>
+                  <div class="lbl" style="margin-top:3px;">P · C · G</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sec">
+              <div class="row">
+                <span class="muted">Peso de hoy</span>
+                <span class="ph" style="padding:3px 8px;">Registrar peso</span>
+              </div>
+            </div>
+
+            <div class="sec">
+              <div class="row"><span style="font-weight:600;">08:00</span><span class="muted">259 kcal</span></div>
+              <div class="rows" style="margin-top:5px;">
+                <div class="divider-row">
+                  <div class="row"><span>Leche entera · 200 ml</span><span class="muted">122</span></div>
+                  <div class="row"><span class="lbl">P 6,0 · C 9,6 · G 6,0</span><span class="lbl">08:12</span></div>
+                </div>
+                <div class="divider-row">
+                  <div class="row"><span>Galletitas · 30 g</span><span class="muted">137</span></div>
+                  <div class="row"><span class="lbl">P 2,4 · C 21,0 · G 4,5</span><span class="lbl">08:15</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sec">
+              <div class="row"><span style="font-weight:600;">13:00</span><span class="muted">430 kcal</span></div>
+              <div class="rows" style="margin-top:5px;">
+                <div class="divider-row">
+                  <div class="row"><span>Milanesa de carne · 180 g</span><span class="muted">430</span></div>
+                  <div class="row"><span class="lbl">P 31,0 · C 18,0 · G 24,0</span><span class="lbl">13:40</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sec">
+              <div class="row"><span style="font-weight:600;">18:00</span><span class="muted">200 kcal</span></div>
+              <div class="rows" style="margin-top:5px;">
+                <div class="divider-row">
+                  <div class="row"><span>Mate cocido · 1 taza</span><span class="muted">200</span></div>
+                  <div class="row"><span class="lbl">P 1,0 · C 38,0 · G 4,0</span><span class="lbl">18:05</span></div>
+                </div>
+              </div>
+              <div class="ph" style="margin-top:6px;">+ Agregar alimento</div>
+            </div>
+
+            <div class="tabs">
+              <div class="tab on">Diario</div><div class="tab">Buscar</div>
+              <div class="tab">Progreso</div><div class="tab">Perfil</div>
+            </div>
+          </div>
+          <div class="lbl" style="margin-top:7px; text-align:center;">4.1 Diario</div>
+        </div>
+
+        <div>
+          <div class="notes">
+            <div class="note"><b>Remaining, not consumed</b><span>"Te quedan 860" is the actionable framing. "Llevás 1.240" is trivia. Same data, different question answered.</span></div>
+            <div class="note"><b>Grouped by hour, not by meal name</b><span>Only hours with entries appear, so the day builds itself as you log. No taxonomy to agree with before recording a snack, and it fits Argentine hours — an 18:00 merienda and a 22:00 dinner need no special case.</span></div>
+            <div class="note"><b>Macros on every row, in small type</b><span>P · C · G per product, subordinate to the kcal figure. Someone tracking protein can scan the column without opening anything; everyone else reads past it.</span></div>
+            <div class="note"><b>Each entry keeps its exact timestamp</b><span>The hour is the grouping; 08:12 is the record. Preserving it makes editing unambiguous and leaves the door open to timing analysis later.</span></div>
+            <div class="note"><b>Weight sits above the food log</b><span>Weigh-ins happen in the morning, in the same session as breakfast. It's one compact row that disappears once logged, not a permanent fixture.</span></div>
+            <div class="note"><b>Date stepper rather than a calendar</b><span>Yesterday is one tap. Full calendar navigation is a rarely-needed screen that shouldn't tax the common case.</span></div>
+          </div>
+
+          <div class="implies">
+            <span class="lbl-h">Implications for what's already built</span>
+            <ul>
+              <li>One query per day against <code>diary_entries_user_time_idx</code>, now ordered <code>(user_id, logged_at desc)</code> after migration <code>20260816000000</code>.</li>
+              <li>Hour buckets are <code>date_trunc('hour', logged_at)</code> — verified working against the new column.</li>
+              <li>Totals are a sum over joined <code>nutrition_facts</code>, scaled by each entry's quantity — computed, never stored, so no drift.</li>
+              <li>Targets come from <code>profiles</code>; the ring is consumed ÷ <code>calorie_target</code>.</li>
+              <li>"Registrar peso" upserts <code>weight_logs</code>, the same write as the profile screen. Two entry points, one row per day enforced by the unique constraint.</li>
+            </ul>
+          </div>
+
+          <p class="open-q"><b>Consequence of hour buckets:</b> eating at 12:58 and 13:05 produces two groups seven minutes apart. Fixed meal slots never had that problem. If it grates in practice, the fix is grouping by gap — start a new block after 90 minutes of no logging — rather than returning to named meals. Worth watching in the beta rather than pre-solving.</p>
+
+          <p class="open-q"><b>Still not drawn:</b> editing and deleting an entry. Tap a row to adjust quantity or time, swipe to delete. Mundane, but real Phase 2 work that belongs in the estimate.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 5. PERFIL ══════════ -->
+    <section class="screen" id="perfil">
+      <div class="screen-head">
+        <span class="screen-num">Screen 5</span>
+        <h2>Perfil y objetivos</h2>
+        <p class="screen-sub">Where the numbers set during onboarding can be revisited, and where weight gets logged.</p>
+      </div>
+
+      <div class="layout">
+        <div class="frame-well">
+          <div class="phone">
+            <div class="st-bar"><span>9:41</span><span>▂▄ ▮</span></div>
+            <div class="nav"><span class="nav-title">Perfil</span></div>
+
+            <div class="sec">
+              <div class="lbl" style="margin-bottom:5px;">Meta diaria</div>
+              <div class="field" style="border-color:var(--wf-line-strong);"><span>2.100 kcal</span><span class="muted">editar</span></div>
+              <div class="rows" style="margin-top:5px;">
+                <div class="row"><span class="muted">Proteínas</span><span>158 g · 30%</span></div>
+                <div class="row"><span class="muted">Carbohidratos</span><span>210 g · 40%</span></div>
+                <div class="row"><span class="muted">Grasas</span><span>70 g · 30%</span></div>
+              </div>
+              <div class="ph" style="margin-top:6px;">Recalcular desde mis datos</div>
+            </div>
+
+            <div class="sec">
+              <div class="row"><span class="lbl">Peso</span><span class="muted">últimos 90 días</span></div>
+              <div class="ph" style="height:52px; margin-top:5px; display:flex; align-items:center; justify-content:center;">— gráfico de tendencia —</div>
+              <div class="row" style="margin-top:6px;">
+                <span>78,4 kg</span><span class="muted">hace 2 días</span>
+              </div>
+              <div class="btn" style="margin-top:6px;">Registrar peso</div>
+            </div>
+
+            <div class="sec">
+              <div class="lbl" style="margin-bottom:5px;">Mis datos</div>
+              <div class="rows">
+                <div class="field"><span>Altura</span><span class="muted">176 cm</span></div>
+                <div class="field"><span>Actividad</span><span class="muted">Moderado</span></div>
+                <div class="field"><span>Objetivo</span><span class="muted">Mantener</span></div>
+              </div>
+            </div>
+
+            <div class="sec">
+              <div class="rows">
+                <div class="row"><span class="muted">Comidas guardadas</span><span class="muted">›</span></div>
+                <div class="row"><span class="muted">Cerrar sesión</span><span class="muted">›</span></div>
+              </div>
+            </div>
+
+            <div class="tabs">
+              <div class="tab">Diario</div><div class="tab">Buscar</div>
+              <div class="tab">Progreso</div><div class="tab on">Perfil</div>
+            </div>
+          </div>
+          <div class="lbl" style="margin-top:7px; text-align:center;">5.1 Perfil</div>
+        </div>
+
+        <div>
+          <div class="notes">
+            <div class="note"><b>Target is directly editable, with recalculation as an escape hatch</b><span>Someone who has been given a number by a nutritionist should be able to type it in. "Recalcular desde mis datos" restores the computed value for everyone else.</span></div>
+            <div class="note"><b>Macros shown as grams and percent</b><span>Percent is how splits are discussed; grams are what you log against. Showing one without the other forces mental arithmetic.</span></div>
+            <div class="note"><b>Weight logging lives here, not in the diary</b><span>Food is logged several times a day; weight weekly at most. Different rhythms, different screens.</span></div>
+            <div class="note"><b>Trend chart, not a table of weigh-ins</b><span>Daily weight is noisy. The direction over 90 days is the only useful reading.</span></div>
+          </div>
+
+          <div class="implies">
+            <span class="lbl-h">Implications for what's already built</span>
+            <ul>
+              <li>Everything in "Mis datos" and "Meta diaria" is a <code>profiles</code> update.</li>
+              <li>"Registrar peso" upserts <code>weight_logs</code> — <code>unique (user_id, logged_on)</code> already makes same-day corrections an upsert rather than a duplicate.</li>
+              <li>The chart reads <code>weight_logs</code> ordered by date; <code>weight_logs_user_date_idx</code> covers it.</li>
+              <li>"Comidas guardadas" navigates to <code>saved_meals</code> — modelled, and with no screen drawn yet.</li>
+            </ul>
+          </div>
+
+          <p class="open-q"><b>Fourth tab is undecided.</b> "Progreso" appears in the tab bar but has no wireframe. It could hold the weight chart and weekly averages — which would then make this screen purely settings. Worth resolving before Phase 2 starts.</p>
+
+          <div class="implies" style="border-style:dashed;">
+            <span class="lbl-h">Parked idea · not MVP</span>
+            <ul>
+              <li><b style="color:var(--ink);">A character that reflects logging consistency.</b> Shown "locked in" when the streak holds, "lost" when logging lapses — a state readable at a glance, without a number or a guilt-trip.</li>
+              <li>Consistency is already derivable: distinct days with entries in <code>diary_entries</code> over a trailing window. No new data needed, only a rule for the thresholds.</li>
+              <li>Deliberately out of MVP. It needs illustration work and a tone decision — a character that reads as disappointed is a fast way to make a calorie app feel punishing, which is the failure mode worth avoiding in this category specifically.</li>
+              <li>Best revisited after the beta, when there is real retention data showing whether people lapse at all and when.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ DECISIONS ══════════ -->
+    <section class="screen" id="decisions">
+      <div class="screen-head">
+        <span class="screen-num">Output</span>
+        <h2>What drawing these surfaced</h2>
+        <p class="screen-sub">The point of wireframing was never the pictures. It was these five items, each of which is cheap to settle now.</p>
+      </div>
+
+      <div class="notes">
+        <div class="note"><b style="color:var(--good);">✓ Resolved · Meal slots replaced by clock time</b><span>Fixed Desayuno/Almuerzo/Merienda/Cena removed entirely. <code>diary_entries.logged_at</code> is a <code>timestamptz</code>, the <code>meal_slot</code> enum is dropped, and the diary groups by hour. Applied in migration <code>20260816000000</code>.</span></div>
+        <div class="note"><b style="color:var(--good);">✓ Resolved · Ritmo has a column</b><span><code>weekly_rate_kg numeric(3,2)</code> on <code>profiles</code>, capped at 2 kg/week. Same migration.</span></div>
+        <div class="note"><b style="color:var(--good);">✓ Resolved · Weight logging reachable from the diary</b><span>A compact row above the food log, upserting the same <code>weight_logs</code> table as the profile screen.</span></div>
+        <div class="note"><b>1 · Favoritos still has no table</b><span>In MVP scope, and what the search empty state is built around, but nothing models it. Needs a <code>favourites</code> join table, or derive it from logging frequency and drop the star.</span></div>
+        <div class="note"><b>2 · The "Progreso" tab is undefined</b><span>It exists in every tab bar drawn here and has no content. Either give it the weight chart and weekly averages, or cut to three tabs.</span></div>
+        <div class="note"><b>3 · Saved meals have no screen</b><span>Modelled in the schema, listed in MVP scope, absent from these five. Needs a list plus a "guardar esta comida" affordance in the diary.</span></div>
+        <div class="note"><b>4 · Products with no serving size need a fallback</b><span><code>serving_size</code> is nullable and bulk-imported rows often lack one. With the new portion control, those products show only the exact-amount row — which is a reasonable answer, but it should be a decision rather than an accident.</span></div>
+        <div class="note"><b>5 · Displayed amounts lose the unit the user typed</b><span>Logging "1 vaso" stores 200 ml, so the diary renders "200 ml". Recovering "1 vaso" means dividing by the product's current <code>serving_size</code>, which shifts historical display if that value is ever corrected. Two extra columns would fix it.</span></div>
+      </div>
+
+      <div class="implies">
+        <span class="lbl-h">Suggested next step</span>
+        <ul>
+          <li>Items 1 and 5 are schema changes and belong together in one migration before Phase 2 starts.</li>
+          <li>Items 2, 3 and 4 are scope and design decisions, legitimately deferrable to the start of Phase 2.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Wireframes are structure, not design. Colour, type, spacing and the app icon are Phase 3 work — deliberately absent here.</p>
+  </footer>
+
+</div>
